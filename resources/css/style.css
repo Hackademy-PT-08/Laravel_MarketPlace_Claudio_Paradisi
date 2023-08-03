@@ -1,0 +1,35 @@
+footer {
+    background-color: black;
+    
+    bottom:0;
+    left:0;
+    width:100%;
+    }
+
+body {
+    background-color:purple;
+    color: white;
+}
+
+section {
+    width: 75%;
+    margin: auto;
+}
+a{
+    text-decoration: none;
+}
+
+.my-card{
+    border-radius: 8px;
+    border-style:solid;
+    border-color: #0f0202;
+    transition: all ease .300s;
+    outline: #0f02024e solid 3px;
+    color: black;
+    }
+    /*con i due punti hover do l'animazione alle card passanodci sopra con il mouse */
+.my-card:hover{
+    cursor: pointer;
+   background-color:purple;
+    color: white;
+}
