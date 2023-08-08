@@ -39,6 +39,7 @@ class PictureController extends Controller
         $picture->title = $request->title;
         $picture->description = $request->description;
         $picture->price = $request->price;
+        $picture->user_id = auth()->user()->id;
         //ho scordato di mettere ->nullable alla creazione della migration, vado a sistemare con un if/else
         if ($request->file('image')) {
 
@@ -70,24 +71,63 @@ class PictureController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Picture $picture)
+    public function edit($id)
     {
-        //
+        $picture = Picture::find($id);
+
+        if (auth()->user()->id == $picture->user_id) {
+
+            return view('pictures.edit', [
+
+                'picture' => $picture,
+                
+
+            ]);
+
+        } else {
+
+            return redirect()->route('index');
+
+        }
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Picture $picture)
+    public function update(Request $request, $id)
     {
-        //
+        $picture = Picture::find($id);
+
+        if(auth()->user()->id == $picture->user_id){
+            $picture->title = $request->title;
+            $picture->description = $request->description;
+            $picture->price = $request->price;
+
+            if ($request->file('image')) {
+
+                $imageId = $picture->image_id;
+
+                $imageName = 'image-picture-' . $imageId . '.' . $request->file('image')->extension();
+
+                $image = $request->file('image')->storeAs('public', $imageName);
+
+            }
+
+            $picture->save();
+        }
+        return redirect()->route('pictures.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Picture $picture)
+    public function destroy($id)
     {
-        //
+        $picture = Picture::find($id);
+
+        $picture->delete();
+
+        return redirect()->route('pictures.index');
     }
 }

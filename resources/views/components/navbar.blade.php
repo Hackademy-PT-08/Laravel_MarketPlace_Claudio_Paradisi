@@ -23,9 +23,31 @@
             <li><a class="dropdown-item" href="#">Something else here</a></li>
           </ul>
         </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+        
+        @if (!auth()->check())
+    
+        <li class="nav-item active"><a class="nav-link" href="/login">Accedi</a></li>
+        <li class="nav-item active"><a class="nav-link" href="/register">Registrati</a></li>
+
+        @else
+
+        <li class="nav-item active"><a class="nav-link" href="{{route('users.profile')}}">Profilo</a></li>
+        <li class="nav-item active"><a class="nav-link" href="{{route('user.my-pictures')}}">I miei quadri</a></li>
+        <li class="nav-item active"><a class="nav-link" href="{{route('pictures.create')}}">Nuovo quadro</a></li>
+        <li class="nav-item active">
+
+            <form  action="/logout" method="post">
+        
+                @csrf
+        
+                <input class="nav-link text-danger" type="submit" value="Logout">
+        
+            </form>
+
         </li>
+
+      @endif
+
       </ul>
       
     </div>

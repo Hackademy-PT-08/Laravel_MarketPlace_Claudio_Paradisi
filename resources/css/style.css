@@ -33,3 +33,8 @@ a{
    background-color:purple;
     color: white;
 }
+
+.my-form{
+    width: 50%;
+    margin: auto;
+}
